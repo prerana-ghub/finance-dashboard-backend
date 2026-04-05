@@ -1,4 +1,4 @@
-## Finance dashboard  
+# Finance dashboard  
 
 A backend API for a finance dashboard system built with **Flask** and **SQLite**. It supports role-based access control, financial record management, and dashboard-level summary analytics.
 
