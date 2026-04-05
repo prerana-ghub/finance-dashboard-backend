@@ -73,14 +73,6 @@ A default admin account is automatically created on first run:
 
 ## API Reference
 
-### Auth
-
-| Method | Endpoint        | Description              | Auth Required |
-|--------|-----------------|--------------------------|---------------|
-| POST   | /auth/login     | Login, returns token     | No            |
-| POST   | /auth/logout    | Invalidate token         | Yes           |
-| GET    | /auth/me        | Get current user info    | Yes           |
-
 **Login request body:**
 ```json
 {
@@ -192,19 +184,19 @@ GET /records/?type=expense&category=rent&start_date=2026-01-01
 
 ## Design Decisions and Assumptions
 
-1. **Soft deletes** — Financial records are never permanently deleted (is_deleted flag). This is a common pattern in finance apps for audit trail purposes.
+1. **Soft deletes** : Financial records are never permanently deleted. This is a common pattern in finance apps for audit trail purposes.
 
-2. **Token invalidation on logout** — Unlike JWT, my tokens are stored in the DB so they can actually be revoked. I felt this made more sense for a dashboard system where sessions need to be controllable.
+2. **Token invalidation on logout** : Unlike JWT, my tokens are stored in the DB so they can actually be revoked. I felt this made more sense for a dashboard system where sessions need to be controllable.
 
-3. **Analysts can create/update but not delete** — I assumed analysts work with the data regularly but deletion should require admin approval to prevent accidental loss.
+3. **Analysts can create/update but not delete** : I assumed analysts work with the data regularly but deletion should require admin approval to prevent accidental loss.
 
-4. **Viewers can see everything** — The dashboard and records are read-only for viewers. They exist to consume reports, not manage data.
+4. **Viewers can see everything** : The dashboard and records are read-only for viewers. They exist to consume reports, not manage data.
 
-5. **Admin can't delete their own account** — Simple protection to prevent accidentally locking out the system.
+5. **Admin can't delete their own account** : Simple protection to prevent accidentally locking out the system.
 
-6. **Pagination is built into GET /records/** — Defaults to 10 per page, avoids returning thousands of records in one shot.
+6. **Pagination is built into GET /records/** : Defaults to 10 per page, avoids returning thousands of records in one shot.
 
-7. **No email verification** — Out of scope for this assignment. Assumed users are created by an admin directly.
+7. **No email verification** : Out of scope for this assignment. Assumed users are created by an admin directly.
 
 ## Error Response Format
 
@@ -216,16 +208,10 @@ All errors return JSON:
 ```
 
 HTTP status codes used:
-- `200` — OK
-- `201` — Created
-- `400` — Bad request / validation error
-- `401` — Not logged in
-- `403` — Logged in but not allowed
-- `404` — Resource not found
-- `409` — Conflict (e.g. duplicate email)
-- Proper JWT with expiry (instead of DB-stored tokens)
-- Unit tests with pytest
-- Rate limiting on login endpoint
-- Search across notes/categories
-- Export records to CSV
-- Audit log table tracking who changed what and when
+ `200` : OK
+ `201` : Created
+ `400` : Bad request / validation error
+ `401` : Not logged in
+ `403` : Logged in but not allowed
+ `404` : Resource not found
+- `409` : Conflict (e.g. duplicate email)
