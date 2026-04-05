@@ -57,7 +57,6 @@ A default admin account is automatically created on first run:
 - **Email:** admin@finance.com
 - **Password:** admin123
 
-
 ## Roles and permissions
 
 | Action                        | Viewer | Analyst | Admin |
@@ -70,29 +69,6 @@ A default admin account is automatically created on first run:
 | View all users                | ❌     | ❌      | ✅    |
 | Create users / assign roles   | ❌     | ❌      | ✅    |
 | Activate / deactivate users   | ❌     | ❌      | ✅    |
-
-## API reference
-
-**Login request body:**
-```json
-{
-  "email": "admin@finance.com",
-  "password": "admin123"
-}
-```
-
-**Login response:**
-```json
-{
-  "token": "abc123...",
-  "user": { "id": 1, "name": "Admin User", "role": "admin" }
-}
-```
-
-All authenticated endpoints require the header:
-```
-Authorization: Bearer <token>
-```
 
 ### Users (Admin only, except /users/:id for own profile)
 
@@ -144,11 +120,6 @@ Authorization: Bearer <token>
 - `page` — page number (default 1)
 - `per_page` — records per page (default 10)
 
-Example:
-```
-GET /records/?type=expense&category=rent&start_date=2026-01-01
-```
-
 ### Dashboard
 
 | Method | Endpoint                  | Description                           | Role Required |
@@ -158,29 +129,6 @@ GET /records/?type=expense&category=rent&start_date=2026-01-01
 | GET    | /dashboard/recent         | Last N records (default 5, max 50)    | Any logged-in |
 | GET    | /dashboard/monthly        | Monthly trends for a year             | Any logged-in |
 | GET    | /dashboard/weekly         | Last 7 days income vs expense         | Any logged-in |
-
-**Example responses:**
-
-`GET /dashboard/summary`
-```json
-{
-  "total_income": 50000.0,
-  "total_expense": 15000.0,
-  "net_balance": 35000.0
-}
-```
-
-`GET /dashboard/monthly?year=2026`
-```json
-{
-  "year": 2026,
-  "trends": [
-    { "month": "Jan", "income": 0, "expense": 0 },
-    { "month": "Apr", "income": 50000.0, "expense": 15000.0 },
-    ...
-  ]
-}
-```
 
 ## Design decisions and assumptions
 
@@ -198,15 +146,6 @@ GET /records/?type=expense&category=rent&start_date=2026-01-01
 
 7. **No email verification** : Out of scope for this assignment. Assumed users are created by an admin directly.
 
-## Error response format
-
-All errors return JSON:
-```json
-{
-  "error": "Description of what went wrong"
-}
-```
-
 HTTP status codes used:
  `200` : OK
  `201` : Created
@@ -214,4 +153,4 @@ HTTP status codes used:
  `401` : Not logged in
  `403` : Logged in but not allowed
  `404` : Resource not found
-- `409` : Conflict (e.g. duplicate email)
+ `409` : Conflict (e.g. duplicate email)
