@@ -1,20 +1,20 @@
-# Finance Data Processing and Access Control Backend
+## Finance dashboard  
 
 A backend API for a finance dashboard system built with **Flask** and **SQLite**. It supports role-based access control, financial record management, and dashboard-level summary analytics.
 
-## Tech Stack
+## Tech stack
 
 - **Language:** Python 3
 - **Framework:** Flask
-- **Database:** SQLite (via Flask-SQLAlchemy)
-- **Auth:** Token-based (secure random tokens stored in DB)
+- **Database:** SQLite 
+- **Auth:** Token-based 
 - **Password Hashing:** Werkzeug (bcrypt-style)
 
-## Why These Choices
+## Why these choices
 
 I chose Flask because I've used it in projects before and it gives me full control over how things are structured without too much magic. SQLite is simple to set up and works well for this scope — no need to configure a separate DB server. For auth, I went with a simple token-based approach (tokens stored in a `user_sessions` table) instead of JWT, because it's easier to invalidate on logout and straightforward to reason about.
 
-## Project Structure
+## Project structure
 
 ```
 finance_backend/
@@ -34,7 +34,7 @@ finance_backend/
     └── auth.py             # login_required and role_required decorators
 ```
 
-## Setup Instructions
+## Setup instructions
 
 ```bash
 # 1. Clone or download the project
@@ -58,7 +58,7 @@ A default admin account is automatically created on first run:
 - **Password:** admin123
 
 
-## Roles and Permissions
+## Roles and permissions
 
 | Action                        | Viewer | Analyst | Admin |
 |-------------------------------|--------|---------|-------|
@@ -71,7 +71,7 @@ A default admin account is automatically created on first run:
 | Create users / assign roles   | ❌     | ❌      | ✅    |
 | Activate / deactivate users   | ❌     | ❌      | ✅    |
 
-## API Reference
+## API reference
 
 **Login request body:**
 ```json
@@ -115,7 +115,7 @@ Authorization: Bearer <token>
 }
 ```
 
-### Financial Records
+### Financial records
 
 | Method | Endpoint          | Description                    | Role Required     |
 |--------|-------------------|--------------------------------|-------------------|
@@ -182,7 +182,7 @@ GET /records/?type=expense&category=rent&start_date=2026-01-01
 }
 ```
 
-## Design Decisions and Assumptions
+## Design decisions and assumptions
 
 1. **Soft deletes** : Financial records are never permanently deleted. This is a common pattern in finance apps for audit trail purposes.
 
@@ -198,7 +198,7 @@ GET /records/?type=expense&category=rent&start_date=2026-01-01
 
 7. **No email verification** : Out of scope for this assignment. Assumed users are created by an admin directly.
 
-## Error Response Format
+## Error response format
 
 All errors return JSON:
 ```json
