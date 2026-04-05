@@ -147,10 +147,10 @@ A default admin account is automatically created on first run:
 7. **No email verification** : Out of scope for this assignment. Assumed users are created by an admin directly.
 
 HTTP status codes used:
- `200` : OK
- `201` : Created
- `400` : Bad request / validation error
- `401` : Not logged in
- `403` : Logged in but not allowed
- `404` : Resource not found
- `409` : Conflict (e.g. duplicate email)
+- `200` : OK
+- `201` : Created
+- `400` : Bad request / validation error
+- `401` : Not logged in
+- `403` : Logged in but not allowed
+- `404` : Resource not found
+- `409` : Conflict (e.g. duplicate email)
