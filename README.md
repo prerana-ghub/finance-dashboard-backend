@@ -2,8 +2,6 @@
 
 A backend API for a finance dashboard system built with **Flask** and **SQLite**. It supports role-based access control, financial record management, and dashboard-level summary analytics.
 
----
-
 ## Tech Stack
 
 - **Language:** Python 3
@@ -12,13 +10,9 @@ A backend API for a finance dashboard system built with **Flask** and **SQLite**
 - **Auth:** Token-based (secure random tokens stored in DB)
 - **Password Hashing:** Werkzeug (bcrypt-style)
 
----
-
 ## Why These Choices
 
 I chose Flask because I've used it in projects before and it gives me full control over how things are structured without too much magic. SQLite is simple to set up and works well for this scope — no need to configure a separate DB server. For auth, I went with a simple token-based approach (tokens stored in a `user_sessions` table) instead of JWT, because it's easier to invalidate on logout and straightforward to reason about.
-
----
 
 ## Project Structure
 
@@ -39,8 +33,6 @@ finance_backend/
 └── middleware/
     └── auth.py             # login_required and role_required decorators
 ```
-
----
 
 ## Setup Instructions
 
@@ -65,7 +57,6 @@ A default admin account is automatically created on first run:
 - **Email:** admin@finance.com
 - **Password:** admin123
 
----
 
 ## Roles and Permissions
 
@@ -79,8 +70,6 @@ A default admin account is automatically created on first run:
 | View all users                | ❌     | ❌      | ✅    |
 | Create users / assign roles   | ❌     | ❌      | ✅    |
 | Activate / deactivate users   | ❌     | ❌      | ✅    |
-
----
 
 ## API Reference
 
@@ -113,8 +102,6 @@ All authenticated endpoints require the header:
 Authorization: Bearer <token>
 ```
 
----
-
 ### Users (Admin only, except /users/:id for own profile)
 
 | Method | Endpoint                   | Description              |
@@ -135,8 +122,6 @@ Authorization: Bearer <token>
   "role": "analyst"
 }
 ```
-
----
 
 ### Financial Records
 
@@ -172,8 +157,6 @@ Example:
 GET /records/?type=expense&category=rent&start_date=2026-01-01
 ```
 
----
-
 ### Dashboard
 
 | Method | Endpoint                  | Description                           | Role Required |
@@ -207,8 +190,6 @@ GET /records/?type=expense&category=rent&start_date=2026-01-01
 }
 ```
 
----
-
 ## Design Decisions and Assumptions
 
 1. **Soft deletes** — Financial records are never permanently deleted (is_deleted flag). This is a common pattern in finance apps for audit trail purposes.
@@ -224,8 +205,6 @@ GET /records/?type=expense&category=rent&start_date=2026-01-01
 6. **Pagination is built into GET /records/** — Defaults to 10 per page, avoids returning thousands of records in one shot.
 
 7. **No email verification** — Out of scope for this assignment. Assumed users are created by an admin directly.
-
----
 
 ## Error Response Format
 
@@ -244,11 +223,6 @@ HTTP status codes used:
 - `403` — Logged in but not allowed
 - `404` — Resource not found
 - `409` — Conflict (e.g. duplicate email)
-
----
-
-## What I'd Add With More Time
-
 - Proper JWT with expiry (instead of DB-stored tokens)
 - Unit tests with pytest
 - Rate limiting on login endpoint
